@@ -33,7 +33,7 @@ function start() {
 
 function findLowest() {
   process.stdout.write('finding out the lowest number of commits @' + username + ' will need...')
-  req({ url: 'https://api.github.com/gists/2657075', headers: {'user-agent': 'muan'} }, function (err, response, data) {
+  req({ url: 'https://api.github.com/gists/2657075', headers: {'user-agent': 'https://github.com/muan/gntu'} }, function (err, response, data) {
     if(err) console.log(err)
     if(response.statusCode === 200) {
       data = JSON.parse(data)
