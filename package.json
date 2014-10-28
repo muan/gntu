@@ -1,18 +1,25 @@
 {
-  "name": "top",
+  "name": "gntu",
   "version": "0.0.1",
   "description": "github's next top user",
   "main": "index.js",
   "scripts": {
     "test": "node test.js"
   },
+  "bin": {
+    "gntu": "index.js"
+  },
   "author": "Mu-An Chiou <me@muanchiou.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/muan/top.git"
+    "url": "https://github.com/muan/gntu.git"
   },
   "bugs": {
-    "url": "https://github.com/muan/top/issues"
+    "url": "https://github.com/muan/gntu/issues"
+  },
+  "dependencies": {
+    "request": "~2.47.0",
+    "cheerio": "~0.17.0"
   }
 }
