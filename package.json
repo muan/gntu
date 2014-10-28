@@ -1,6 +1,6 @@
 {
   "name": "gntu",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "you're still in the running towards becoming github's next top user",
   "main": "index.js",
   "scripts": {
