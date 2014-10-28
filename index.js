@@ -52,7 +52,7 @@ function findLowest() {
 function grandReveal() {
   var diff = commitsNeeded - commitsHad
   if(diff > 0) {
-    console.log('@' + username + ' needs ' + diff + ' more commits to be on the list.')
+    console.log('@' + username + ' needs ' + diff + ' more commits to be on *the* list.')
   } else {
     console.log('@' + username + ' should be on that list already!')
   }
