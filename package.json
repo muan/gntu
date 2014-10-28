@@ -1,7 +1,7 @@
 {
   "name": "gntu",
   "version": "0.0.1",
-  "description": "github's next top user",
+  "description": "you're still in the running towards becoming github's next top user",
   "main": "index.js",
   "scripts": {
     "test": "node test.js"
