@@ -51,7 +51,12 @@ function findLowest() {
       commitsNeeded = $('tr').last().find('td:nth-child(3)').text()
       process.stdout.write(commitsNeeded + '!\n')
       
-      grandReveal()
+      if($('table [href="https://github.com/' + username + '"]').length) {
+        process.stdout.write('\nlooks like @' + username + ' is already on the list!\n')
+        process.exit(0)
+      } else {
+        grandReveal()
+      }
     }
   })
 }
