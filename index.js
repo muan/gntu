@@ -10,50 +10,46 @@ var followersHas = 0
 var headers = {'user-agent': 'https://github.com/muan/gntu'}
 
 if(!username) {
-  console.log('💥  give me a username to check.')
-  process.exit(1)
+  handleErr('💥  give me a username to check.')
 }
 
 start()
 
 function start() {
-  process.stdout.write('finding out how many public commits @' + username + ' has...')
+  process.stdout.write('finding out how many public commits @' + username + ' has... ')
   req('https://github.com/' + username, function (err, response, data) {
-    if(err) console.log(err)
+    if(err) handleErr(err)
     if(response.statusCode === 404) {
-      console.log('\nthere is no user named @' + username + '!')
-      process.exit(1)
-    }
-    if(response.statusCode === 200) {
+      handleErr('there is no user named @' + username + '!')
+    } else if (response.statusCode === 200) {
       $ = cheerio.load(data)
       commitsHas = $('.contrib-number').text().split(' ')[0].replace(/,/, '')
-      process.stdout.write(' ' + commitsHas + '!\n')
+      process.stdout.write(commitsHas + '!\n')
 
       req({url: 'https://api.github.com/users/' + username, headers: headers }, function (err, response, data) {
-        if(err) console.log(err)
-        if(response.statusCode === 200) {
-          data = JSON.parse(data)
-          followersHas = data.followers
-          findLowest()
-        }
+        if(err || (response && response.statusCode !== 200)) handleErr(err, data)
+        data = JSON.parse(data)
+        followersHas = data.followers
+        findLowest()
       })
+    } else {
+      handleErr(null, data)
     }
   })
 }
 
 function findLowest() {
-  process.stdout.write('finding out the lowest number of commits @' + username + ' will need...')
+  process.stdout.write('finding out the lowest number of commits @' + username + ' will need... ')
   req({ url: 'https://api.github.com/gists/2657075', headers: headers }, function (err, response, data) {
-    if(err) console.log(err)
+    if(err || (response && response.statusCode !== 200)) handleErr(err, data)
     if(response.statusCode === 200) {
       data = JSON.parse(data)
       var content = data.files['active.md'].content
       followersNeeded = content.match(/user.followers > ([0-9]+)\)/)[1]
-      var table = content.split('<table cellspacing="0">')[1].split('</table>')[0]
-      $ = cheerio.load(table)
+      $ = cheerio.load(content)
 
       commitsNeeded = $('tr').last().find('td:nth-child(3)').text()
-      process.stdout.write(' ' + commitsNeeded + '!\n')
+      process.stdout.write(commitsNeeded + '!\n')
       
       grandReveal()
     }
@@ -75,4 +71,11 @@ function grandReveal() {
     console.log('@' + username + ' should be on that list already!')
   }
   process.exit(0)
+}
+
+function handleErr(err, data) {
+  err = err || 'Something went wrong.'
+  console.log(err)
+  if(data) console.log(data)
+  process.exit(1)
 }
