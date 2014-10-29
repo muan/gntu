@@ -15,7 +15,7 @@ if(!username) {
 
 start()
 
-function start() {
+function fetchUser() {
   process.stdout.write('finding out how many public commits @' + username + ' has... ')
   req('https://github.com/' + username, function (err, response, data) {
     if(err) handleErr(err)
@@ -30,7 +30,7 @@ function start() {
         if(err || (response && response.statusCode !== 200)) handleErr(err, data)
         data = JSON.parse(data)
         followersHas = data.followers
-        findLowest()
+        grandReveal()
       })
     } else {
       handleErr(null, data)
@@ -38,7 +38,7 @@ function start() {
   })
 }
 
-function findLowest() {
+function start() {
   process.stdout.write('finding out the lowest number of commits @' + username + ' will need... ')
   req({ url: 'https://api.github.com/gists/2657075', headers: headers }, function (err, response, data) {
     if(err || (response && response.statusCode !== 200)) handleErr(err, data)
@@ -52,10 +52,10 @@ function findLowest() {
       process.stdout.write(commitsNeeded + '!\n')
       
       if($('table [href="https://github.com/' + username + '"]').length) {
-        process.stdout.write('\nlooks like @' + username + ' is already on the list!\n')
+        process.stdout.write('looks like @' + username + ' is already on the list!\n')
         process.exit(0)
       } else {
-        grandReveal()
+        fetchUser()
       }
     }
   })
