@@ -26,7 +26,7 @@ function start() {
     }
     if(response.statusCode === 200) {
       $ = cheerio.load(data)
-      commitsHas = $('.contrib-number').text().split(' ')[0]
+      commitsHas = $('.contrib-number').text().split(' ')[0].replace(/,/, '')
       process.stdout.write(' ' + commitsHas + '!\n')
 
       req({url: 'https://api.github.com/users/' + username, headers: headers }, function (err, response, data) {
