@@ -70,8 +70,8 @@ function grandReveal() {
     } else {
       console.log('@' + username + ' needs ' + diff + ' more commits to be on *the* list.')
     }
-  } else if(followersNeeded > followersHas) {
-    console.log('@' + username + ' should be on that list BUT does not have meet the followers requirement :(')
+  } else if(fdiff > 0) {
+    console.log('@' + username + ' needs ' + fdiff + ' more followers to be on *the* list.')
   } else {
     console.log('@' + username + ' should be on that list already!')
   }
