@@ -1,5 +1,7 @@
 # gntu
 
+Checking a GitHub user against http://git.io/top.
+
 ## install
 
 ```sh
